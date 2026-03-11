@@ -1,14 +1,44 @@
-<!DOCTYPE html>
+<!doctype html>
 <html ng-app="taskFlow">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg" />
+    <title>TaskFlow</title>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
+    <!-- AngularJS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
-<body>
-    <h1>Rohan</h1>
-</body>
+    <link rel="stylesheet" href="src/css/style.css" />
+  </head>
 
+  <body>
+    <!-- Header section  -->
+    <header>
+      <div class="logo-name-container">
+        <div class="logo" onclick="location.reload()">
+          <img src="./src/assets/logo.png" alt="logo" />
+        </div>
+        <div class="name">Task<span class="accent">Flow</span></div>
+      </div>
+
+      <!-- Theme Button -->
+      <div
+        class="theme-button"
+        ng-click="toggleTheme()"
+        ng-controller="themeController"
+      >
+        <!-- Show when dark -->
+        <img src="./src/assets/light.svg" alt="light" ng-show="!isLight" />
+
+        <!-- Show when light -->
+        <img src="./src/assets/dark.svg" alt="dark" ng-show="isLight" />
+      </div>
+    </header>
+
+    <main></main>
+    <footer></footer>
+
+    <script type="module" src="src/js/main.js"></script>
+  </body>
 </html>
