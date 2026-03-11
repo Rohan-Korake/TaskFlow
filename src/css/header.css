@@ -5,6 +5,7 @@ header {
   align-items: center;
   flex-direction: row;
   justify-content: space-between;
+  border-bottom: 2px solid var(--success-color);
 }
 
 .logo img {
@@ -39,8 +40,33 @@ header {
 }
 
 .theme-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
   padding: 0.2rem 0.3rem;
   border-radius: 0.5rem;
   background: var(--bg-secondary);
+  margin: 0.5rem;
+}
+
+@media (max-width: 480px) {
+  .logo img {
+    width: 1.9rem;
+  }
+
+  .name {
+    font-weight: 600;
+    font-size: 1.4rem;
+  }
+
+  .theme-button img {
+    width: 1rem;
+  }
+
+  .theme-button {
+    cursor: pointer;
+    padding: 0rem 0.1rem;
+    border-radius: 0.2rem;
+  }
 }
