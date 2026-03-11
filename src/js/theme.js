@@ -2,6 +2,7 @@ var app = angular.module("taskFlow", []);
 
 app.controller("themeController", function ($scope) {
   const savedTheme = localStorage.getItem("theme") || "dark";
+  document.getElementById("taskDate").valueAsDate = new Date();
 
   $scope.isLight = savedTheme === "light";
 
