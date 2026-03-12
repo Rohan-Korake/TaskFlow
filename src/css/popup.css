@@ -1,3 +1,7 @@
+[ng-cloak] {
+  display: none !important;
+}
+
 .popup-wrapper {
   position: fixed;
   top: 0;
@@ -46,14 +50,16 @@
   border: 0.2rem solid var(--border-color);
   border-radius: 0.5rem;
   font-size: 1.3rem;
-  color: var(--text-primary);
+  color: var(--text-secondary);
 }
 
 .priority-input {
-  height: 3rem;
+  height: 3.5rem;
   padding: 0.5rem;
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 .popup-container input::placeholder {

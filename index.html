@@ -8,6 +8,8 @@
 
     <!-- AngularJS -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+
+    <!-- Font Awesome -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -17,7 +19,7 @@
   </head>
 
   <body>
-    <!-- Header section  -->
+    <!-- Header -->
     <header>
       <div class="logo-name-container">
         <div class="logo" onclick="location.reload()">
@@ -29,57 +31,61 @@
       <!-- Theme Button -->
       <div
         class="theme-button"
-        ng-click="toggleTheme()"
         ng-controller="themeController"
+        ng-click="toggleTheme()"
       >
-        <!-- Show when dark -->
-        <img src="./src/assets/light.svg" alt="light" ng-show="!isLight" />
-
-        <!-- Show when light -->
-        <img src="./src/assets/dark.svg" alt="dark" ng-show="isLight" />
+        <img src="./src/assets/light.svg" ng-show="!isLight" />
+        <img src="./src/assets/dark.svg" ng-show="isLight" />
       </div>
     </header>
 
     <main>
-      <!-- add new task  -->
-      <div class="input-container">
-        <div class="input-component">
-          <!-- <input type="text" placeholder="Add a new task..." /> -->
-          <button class="add-task-button" ng-click="isVisible = !isVisible">
+      <!-- Popup Controller -->
+      <div ng-controller="popupController">
+        <!-- Add Task Button -->
+        <div class="input-container">
+          <button class="add-task-button" ng-click="toggleForm()">
             <i class="fa-solid fa-plus"></i> Add Task
           </button>
         </div>
-      </div>
 
-      <!-- add new task popup  -->
-      <div class="popup-wrapper" ng-show="isVisible">
-        <div class="popup-container">
-          <div class="popup-title">Add Task</div>
-          <input
-            type="text"
-            placeholder="Add a new task..."
-            class="task-input"
-          />
-          <input type="date" class="date-input" id="taskDate" />
-          <select class="priority-input">
-            <option value="">Select Priority</option>
-            <option>High</option>
-            <option>Medium</option>
-            <option>Low</option>
-          </select>
-          <div class="control-buttons">
-            <button class="add-task-button" ng-click="isVisible = !isVisible">
-              Add
-            </button>
-            <button class="add-task-button" ng-click="isVisible = !isVisible">
-              Cancel
-            </button>
+        <!-- Popup -->
+        <div class="popup-wrapper" ng-show="isVisible">
+          <div class="popup-container">
+            <div class="popup-title">Add Task</div>
+
+            <input
+              type="text"
+              placeholder="Add a new task..."
+              class="task-input"
+              ng-model="taskName"
+            />
+
+            <input type="date" class="date-input" ng-model="taskDate" />
+
+            <select class="priority-input">
+              <option value="">Select Priority</option>
+              <option>High</option>
+              <option>Medium</option>
+              <option>Low</option>
+            </select>
+
+            <div class="control-buttons">
+              <button class="add-task-button" ng-click="submitTask()">
+                Add
+              </button>
+              <button class="add-task-button" ng-click="closeForm()">
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       </div>
     </main>
+
     <footer></footer>
 
+    <!-- Main JS -->
     <script type="module" src="src/js/main.js"></script>
   </body>
 </html>
