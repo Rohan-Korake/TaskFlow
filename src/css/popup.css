@@ -14,7 +14,7 @@
   align-items: center;
   padding-top: 40px;
   color: var(--accent-primary);
-  z-index: 9999;
+  z-index: 9;
 }
 
 .popup-container {
@@ -77,8 +77,16 @@
   justify-content: space-between;
   align-items: center;
   gap: 0.5rem;
+  margin-top: 1rem;
 }
 
 .control-buttons button {
   width: 100%;
+}
+
+.error {
+  color: var(--danger-color);
+  font-size: 12px;
+  display: block;
+  margin: 0;
 }

@@ -1,91 +1,128 @@
 <!doctype html>
 <html ng-app="taskFlow">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg" />
-    <title>TaskFlow</title>
 
-    <!-- AngularJS -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" type="image/svg+xml" href="src/assets/favicon.svg" />
+  <title>TaskFlow</title>
 
-    <!-- Font Awesome -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-    />
+  <!-- AngularJS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
 
-    <link rel="stylesheet" href="src/css/style.css" />
-  </head>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-  <body>
-    <!-- Header -->
-    <header>
-      <div class="logo-name-container">
-        <div class="logo" onclick="location.reload()">
-          <img src="./src/assets/logo.png" alt="logo" />
-        </div>
-        <div class="name">Task<span class="accent">Flow</span></div>
+  <link rel="stylesheet" href="src/css/style.css" />
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="logo-name-container">
+      <div class="logo" onclick="location.reload()">
+        <img src="./src/assets/logo.png" alt="logo" />
+      </div>
+      <div class="name">Task<span class="accent">Flow</span></div>
+    </div>
+
+    <!-- Theme Button -->
+    <div class="theme-button" ng-controller="themeController" ng-click="toggleTheme()">
+      <img src="./src/assets/light.svg" ng-show="!isLight" />
+      <img src="./src/assets/dark.svg" ng-show="isLight" />
+    </div>
+  </header>
+
+  <main>
+    <!-- Popup Controller -->
+    <div ng-controller="popupController">
+      <!-- Add Task Button -->
+      <div class="input-container">
+        <button class="add-task-button" ng-click="toggleForm()">
+          <i class="fa-solid fa-plus"></i> Add Task
+        </button>
       </div>
 
-      <!-- Theme Button -->
-      <div
-        class="theme-button"
-        ng-controller="themeController"
-        ng-click="toggleTheme()"
-      >
-        <img src="./src/assets/light.svg" ng-show="!isLight" />
-        <img src="./src/assets/dark.svg" ng-show="isLight" />
-      </div>
-    </header>
+      <!-- Popup -->
+      <div class="popup-wrapper" ng-show="isVisible">
+          <form name="taskForm" novalidate class="popup-container" >
+          <div class="popup-title">Add Task</div>
 
-    <main>
-      <!-- Popup Controller -->
-      <div ng-controller="popupController">
-        <!-- Add Task Button -->
-        <div class="input-container">
-          <button class="add-task-button" ng-click="toggleForm()">
-            <i class="fa-solid fa-plus"></i> Add Task
-          </button>
-        </div>
+            <input type="text" placeholder="Add a new task..." class="task-input" maxlength="35"
+              ng-model="task.title" name="title" required />
+            <span class="error" ng-show="(taskForm.title.$touched || taskForm.$submitted) && taskForm.title.$error.required">
+              Task name is required
+            </span>
 
-        <!-- Popup -->
-        <div class="popup-wrapper" ng-show="isVisible">
-          <div class="popup-container">
-            <div class="popup-title">Add Task</div>
+            <input id="taskDate" type="date" class="date-input" ng-model="task.date" name="date" required ng-min="{{today}}" />
+            <span class="error" ng-show="(taskForm.date.$touched || taskForm.$submitted) && taskForm.date.$error.required">
+              Date is required
+            </span>
+            <span class="error" ng-show="taskForm.date.$touched && taskForm.date.$error.min">
+              Date cannot be in the past
+            </span>
 
-            <input
-              type="text"
-              placeholder="Add a new task..."
-              class="task-input"
-              ng-model="taskName"
-            />
-
-            <input type="date" class="date-input" ng-model="taskDate" />
-
-            <select class="priority-input">
+            <select class="priority-input" ng-model="task.priority" name="priority" required>
               <option value="">Select Priority</option>
-              <option>High</option>
-              <option>Medium</option>
-              <option>Low</option>
+              <option>Urgent</option>
+              <option>Soon</option>
+              <option>Later</option>
             </select>
+            <span class="error" ng-show="(taskForm.priority.$touched || taskForm.$submitted) && taskForm.priority.$error.required">
+              Priority is required
+            </span>
 
             <div class="control-buttons">
-              <button class="add-task-button" ng-click="submitTask()">
+              <button class="add-task-button" ng-click="submitTask()" ng-disabled="taskForm.$invalid">
                 Add
               </button>
               <button class="add-task-button" ng-click="closeForm()">
                 Cancel
               </button>
-            </div>
+          </form>
+      </div>
+    </div>
+    </div>
+
+    <!-- card contianer  -->
+    <div class="card-container" ng-controller="cardController">
+      <div class="no-tasks" ng-if="!tasks || tasks.length === 0">
+        <p>No tasks yet. Click "Add Task" to get started.</p>
+      </div>
+
+      <div class="card" ng-repeat="task in tasks track by $index">
+        <div class="card-pin">
+          <img src="./src/assets/pin.svg" alt="pin"  ng-class="{
+      'pin-urgent': task.priority == 'Urgent',
+      'pin-soon': task.priority == 'Soon',
+      'pin-later': task.priority == 'Later'
+    }"/>
+        </div>
+
+        <div class="content-wrapper">
+          <div class="title">{{task.title}}</div>
+          <input type="checkbox" />
+        </div>
+
+        <div class="content-wrapper">
+          <div class="date">{{task.date | date:'dd/MM/yyyy'}}</div>
+
+          <div class="priority">
+            {{task.priority}}<span class="priority-label" ng-class="{
+            'urgent': task.priority == 'Urgent',
+            'later': task.priority == 'Later',
+            'soon': task.priority == 'Soon',
+          }"></span>
           </div>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <footer></footer>
+  <footer></footer>
 
-    <!-- Main JS -->
-    <script type="module" src="src/js/main.js"></script>
-  </body>
+  <!-- Main JS -->
+  <script type="module" src="src/js/main.js"></script>
+</body>
+
 </html>

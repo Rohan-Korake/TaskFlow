@@ -1,18 +1,31 @@
 import { app } from "./app.js";
 
-app.controller("popupController", function ($scope) {
+app.controller("popupController", function ($scope, $rootScope) {
   console.log("popupController initialized");
   const taskDateInput = document.getElementById("taskDate");
+  $scope.isVisible = false;
+  $scope.today = new Date().toISOString().split("T")[0]; // YYYY-MM-DD
+
   if (taskDateInput) {
     taskDateInput.valueAsDate = new Date();
   }
-  $scope.isVisible = false;
 
   $scope.submitTask = function () {
-    console.log("submitted", $scope.taskName, $scope.taskDate);
+    if ($scope.taskForm.$valid) {
+      $scope.tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
-    $scope.resetPopup();
-    $scope.toggleForm();
+      $scope.tasks.push({
+        title: $scope.task.title,
+        date: $scope.task.date,
+        priority: $scope.task.priority,
+      });
+
+      localStorage.setItem("tasks", JSON.stringify($scope.tasks));
+      $rootScope.$broadcast("tasksUpdated");
+
+      $scope.resetPopup();
+      $scope.toggleForm();
+    }
   };
 
   $scope.closeForm = function () {
@@ -21,8 +34,9 @@ app.controller("popupController", function ($scope) {
   };
 
   $scope.resetPopup = function () {
-    $scope.taskName = "";
-    $scope.taskDate = "";
+    $scope.task = {};
+    $scope.taskForm.$setPristine();
+    $scope.taskForm.$setUntouched();
   };
 
   $scope.toggleForm = function () {
