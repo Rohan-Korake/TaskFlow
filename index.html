@@ -12,11 +12,11 @@
 
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <link rel="stylesheet" href="src/css/style.css" />
 </head>
 
-<body>
+<body  ng-cloak>
   <!-- Header -->
   <header>
     <div class="logo-name-container">
@@ -35,7 +35,7 @@
 
   <main>
     <!-- Popup Controller -->
-    <div ng-controller="popupController">
+    <div ng-controller="popupController"  ng-cloak>
       <!-- Add Task Button -->
       <div class="input-container">
         <button class="add-task-button" ng-click="toggleForm()">
@@ -45,41 +45,31 @@
 
       <!-- Popup -->
       <div class="popup-wrapper" ng-show="isVisible">
-          <form name="taskForm" novalidate class="popup-container" >
+        <form name="taskForm" novalidate class="popup-container">
           <div class="popup-title">Add Task</div>
 
-            <input type="text" placeholder="Add a new task..." class="task-input" maxlength="35"
-              ng-model="task.title" name="title" required />
-            <span class="error" ng-show="(taskForm.title.$touched || taskForm.$submitted) && taskForm.title.$error.required">
-              Task name is required
-            </span>
+          <input type="text" placeholder="Add a new task..." class="task-input" maxlength="35" ng-model="task.title"
+            name="title" ng-change="capitalizeFirstLetter()" required />
+          <span class="error"
+            ng-show="(taskForm.title.$touched || taskForm.$submitted) && taskForm.title.$error.required">
+            Task name is required
+          </span>
 
-            <input id="taskDate" type="date" class="date-input" ng-model="task.date" name="date" required ng-min="{{today}}" />
-            <span class="error" ng-show="(taskForm.date.$touched || taskForm.$submitted) && taskForm.date.$error.required">
-              Date is required
-            </span>
-            <span class="error" ng-show="taskForm.date.$touched && taskForm.date.$error.min">
-              Date cannot be in the past
-            </span>
+          <input id="taskDate" type="date" class="date-input" ng-model="task.date" name="date" required
+            min="{{today}}" />
+          <span class="error"
+            ng-show="(taskForm.date.$touched || taskForm.$submitted) && taskForm.date.$error.required">
+            Date is required
+          </span>
 
-            <select class="priority-input" ng-model="task.priority" name="priority" required>
-              <option value="">Select Priority</option>
-              <option>Urgent</option>
-              <option>Soon</option>
-              <option>Later</option>
-            </select>
-            <span class="error" ng-show="(taskForm.priority.$touched || taskForm.$submitted) && taskForm.priority.$error.required">
-              Priority is required
-            </span>
-
-            <div class="control-buttons">
-              <button class="add-task-button" ng-click="submitTask()" ng-disabled="taskForm.$invalid">
-                Add
-              </button>
-              <button class="add-task-button" ng-click="closeForm()">
-                Cancel
-              </button>
-          </form>
+          <div class="control-buttons">
+            <button type="button" class="add-task-button" ng-click="submitTask()" ng-disabled="taskForm.$invalid">
+              Add
+            </button>
+            <button type="button" class="add-task-button" ng-click="closeForm()">
+              Cancel
+            </button>
+        </form>
       </div>
     </div>
     </div>
@@ -92,16 +82,16 @@
 
       <div class="card" ng-repeat="task in tasks track by $index">
         <div class="card-pin">
-          <img src="./src/assets/pin.svg" alt="pin"  ng-class="{
+          <img src="./src/assets/pin.svg" alt="pin" ng-class="{
       'pin-urgent': task.priority == 'Urgent',
-      'pin-soon': task.priority == 'Soon',
+      'pin-upcoming': task.priority == 'Upcoming',
       'pin-later': task.priority == 'Later'
-    }"/>
+    }" />
         </div>
 
         <div class="content-wrapper">
           <div class="title">{{task.title}}</div>
-          <input type="checkbox" />
+          <input type="checkbox" ng-model="task.completed" ng-change="completeTask(task)" />
         </div>
 
         <div class="content-wrapper">
@@ -111,7 +101,7 @@
             {{task.priority}}<span class="priority-label" ng-class="{
             'urgent': task.priority == 'Urgent',
             'later': task.priority == 'Later',
-            'soon': task.priority == 'Soon',
+            'upcoming': task.priority == 'Upcoming',
           }"></span>
           </div>
         </div>
@@ -119,7 +109,19 @@
     </div>
   </main>
 
-  <footer></footer>
+  <!-- Social links  -->
+  <footer>
+    <div class="social-links">
+      <a href="https://www.linkedin.com/in/rohan-korake-720848342/" target="_blank">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="https://github.com/Rohan-Korake" target="_blank">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="mailto:rohannkorake@gmail.com" target="_blank">
+        <i class="fas fa-envelope"></i> </a>
+    </div>
+  </footer>
 
   <!-- Main JS -->
   <script type="module" src="src/js/main.js"></script>

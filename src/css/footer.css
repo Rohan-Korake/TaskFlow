@@ -1,0 +1,36 @@
+footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 0.5rem 0;
+  z-index: 8;
+}
+
+.social-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  border-radius: 1rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg-secondary);
+}
+
+.social-links a {
+  color: var(--text-primary);
+  font-size: 1.5rem;
+  transition:
+    transform 0.2s,
+    color 0.2s;
+}
+
+@media (max-width: 480px) {
+  .social-links {
+    display: flex;
+    justify-content: space-around;
+  }
+}

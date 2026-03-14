@@ -4,11 +4,19 @@
 
 # TaskFlow
 
-## Project Status: Under Development
-
 TaskFlow is a simple task management web application built using AngularJS, HTML, CSS, and JavaScript.
 
 ## Finished Components
 
 - Dark/Light Mode
-- Cards with Pin
+- Add Task
+- Pinned Cards by Priority
+- Compelete Task
+
+## Features
+
+- Dark/Light Mode
+- Add/Delete Tasks
+- Pinned Cards
+- Responsive Design
+- Task Priority

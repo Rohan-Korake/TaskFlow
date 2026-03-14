@@ -53,15 +53,6 @@
   color: var(--text-secondary);
 }
 
-.priority-input {
-  height: 3.5rem;
-  padding: 0.5rem;
-  width: 100%;
-  font-size: 1.1rem;
-  font-weight: 600;
-  color: var(--text-secondary);
-}
-
 .popup-container input::placeholder {
   color: var(--text-secondary);
 }
