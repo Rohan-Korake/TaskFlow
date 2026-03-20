@@ -85,7 +85,8 @@
           <img src="./src/assets/pin.svg" alt="pin" ng-class="{
       'pin-urgent': task.priority == 'Urgent',
       'pin-upcoming': task.priority == 'Upcoming',
-      'pin-later': task.priority == 'Later'
+      'pin-later': task.priority == 'Later',
+      'pin-overdue': task.priority == 'Overdue',
     }" />
         </div>
 
@@ -102,6 +103,7 @@
             'urgent': task.priority == 'Urgent',
             'later': task.priority == 'Later',
             'upcoming': task.priority == 'Upcoming',
+            'overdue': task.priority == 'Overdue',
           }"></span>
           </div>
         </div>

@@ -100,6 +100,14 @@ input[type="checkbox"] {
   filter: hue-rotate(120deg);
 }
 
+.overdue {
+  background: #1c33b9;
+}
+
+.pin-overdue {
+  filter: hue-rotate(240deg);
+}
+
 .card:hover {
   background: #1c2b45;
 }

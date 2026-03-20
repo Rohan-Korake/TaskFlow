@@ -26,7 +26,9 @@ app.controller("popupController", function ($scope, $rootScope) {
       const days = Math.ceil(time / (1000 * 60 * 60 * 24));
 
       let priority = "Later";
-      if (days <= 1) {
+      if (days < 0) {
+        priority = "Overdue";
+      } else if (days <= 1) {
         priority = "Urgent";
       } else if (days <= 3) {
         priority = "Upcoming";
